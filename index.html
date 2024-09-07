@@ -4,11 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Surat Keterangan Domisili</title>
+  <style>
+    input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+  </style>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="flex items-center justify-center min-h-screen bg-gray-900 text-white">
 
-<div class="w-full max-w-md p-6 rounded-lg shadow-md">
+<div class="w-full xl:max-w-2xl p-6 rounded-lg shadow-md">
   <h1 class="text-2xl font-bold text-center mb-6">Form Pengisian Domisili</h1>
   
   <form id="dataForm">
@@ -39,7 +46,7 @@
       </div>
     </div>
     <div class="relative z-0 w-full mb-5 group">
-      <select name="agama" id="agama" class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-500 peer" required>
+      <select name="agama" id="agama" class="block py-2.5 px-2 w-full text-sm text-black bg-white rounded-full border-0 border-b-2 border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-500 peer" required>
         <option value="" disabled selected></option>
         <option value="islam">Islam</option>
         <option value="katolik">Katolik</option>
@@ -47,26 +54,42 @@
         <option value="hindu">Hindu</option>
         <option value="budha">Budha</option>
         <option value="budha">Khonghucu</option>
-      </select>  
-      <label for="agama" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Agama</label>
+      </select>
+      <label for="agama" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-1.5 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Agama</label>
     </div>
     <div class="relative z-0 w-full mb-5 group">
-        <input type="text" name="warganegara" id="warganegara" class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-500 peer" placeholder=" " required />
-        <label for="warganegara" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Warganegara</label>
+        <input type="text" name="warganegara" id="warganegara" class="block py-2.5 px-3 w-full text-sm text-black bg-white rounded-full border-0 border-b-2 border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-500 peer" placeholder=" " required />
+        <label for="warganegara" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-1.5 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Warganegara</label>
     </div>
     <div class="relative z-0 w-full mb-5 group">
-        <input type="number" name="no_ktp_nik" id="no_ktp_nik" class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-500 peer" placeholder=" " required />
-        <label for="no_ktp_nik" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">No KTP/NIK</label>
+        <input type="number" name="no_ktp_nik" id="no_ktp_nik" class="block py-2.5 px-3 w-full text-sm text-black bg-white rounded-full border-0 border-b-2 border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-500 peer" placeholder=" " required />
+        <label for="no_ktp_nik" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-1.5 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">No KTP/NIK</label>
     </div>
     <div class="relative z-0 w-full mb-5 group">
-        <input type="text" name="pekerjaan" id="pekerjaan" class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-500 peer" placeholder=" " required />
-        <label for="pekerjaan" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Pekerjaan</label>
+        <input type="text" name="pekerjaan" id="pekerjaan" class="block py-2.5 px-3 w-full text-sm text-black bg-white rounded-full border-0 border-b-2 border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-500 peer" placeholder=" " required />
+        <label for="pekerjaan" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-1.5 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Pekerjaan</label>
     </div>
-    <div class="relative z-0 w-full mb-5 group">
-        <input type="text" name="alamat" id="alamat" class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-500 peer" placeholder=" " required />
-        <label for="alamat" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Alamat</label>
+    <div class="grid grid-cols-3 gap-3">
+      <div class="relative z-0 w-full col-span-2 mb-5 group">
+          <input type="text" name="alamat" id="alamat" class="block py-2.5 px-3 w-full text-sm text-black bg-white rounded-full border-0 border-b-2 border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-500 peer" placeholder=" " required />
+          <label for="alamat" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-1.5 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Alamat</label>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="relative z-0 w-full mb-5 group">
+          <input type="number" name="rt" id="rt" class="block py-2.5 px-3 w-full text-sm text-black bg-white rounded-full border-0 border-b-2 border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-500 peer" placeholder=" " required />
+          <label for="rt" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-1.5 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">RT</label>
+        </div>
+        <div class="relative z-0 w-full mb-5 group">
+          <input type="number" name="rw" id="rw" class="block py-2.5 px-3 w-full text-sm text-black bg-white rounded-full border-0 border-b-2 border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-500 peer" placeholder=" " required />
+          <label for="rw" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-1.5 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">RW</label>
+        </div>
+      </div>
     </div>
-    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+    <div class="flex justify-center">
+      <button type="submit" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm w-1/2 px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          Submit
+      </button>
+    </div>  
   </form>
 </div>
 
