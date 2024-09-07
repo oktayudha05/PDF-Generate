@@ -122,6 +122,6 @@ const fillPDF = async (
   const blob = new Blob([pdfBytes], { type: "application/pdf" });
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.download = `result/tes_form_${name}.pdf`;
+  link.download = `Surat Keterangan Domisili_${name}.pdf`;
   link.click();
 };
