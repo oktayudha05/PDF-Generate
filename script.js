@@ -1,70 +1,127 @@
-document.getElementById('dataForm').addEventListener('submit', async (event) => {
-  event.preventDefault();
+function formatTanggal(tanggal) {
+  const bulanNama = [
+    "Januari",
+    "Februari",
+    "Maret",
+    "April",
+    "Mei",
+    "Juni",
+    "Juli",
+    "Agustus",
+    "September",
+    "Oktober",
+    "November",
+    "Desember",
+  ];
 
-  const name = document.getElementById('nama_lengkap').value;
-  const jk = document.getElementById('jenis_kelamin').value;
-  const bin = document.getElementById('bin_binti').value;
-  const agama = document.getElementById('agama').value;
-  const temLahir = document.getElementById('tempat_lahir').value; 
-  const tangLahir = document.getElementById('tanggal_lahir').value; 
-  const lahir = `${temLahir}, ${tangLahir}`;
-  // Isi PDF
-  await fillPDF(name, jk, bin, lahir, agama);
-});
+  const tanggalObj = new Date(tanggal);
+  const hari = tanggalObj.getDate();
+  const bulan = bulanNama[tanggalObj.getMonth()];
+  const tahun = tanggalObj.getFullYear();
 
-const fillPDF = async (name, jk, bin, lahir, agama) => {
+  return `${hari} ${bulan} ${tahun}`;
+}
+
+function toTitleCase(str) {
+  if (!str) {
+    return "";
+  }
+  const strArr = str.split(" ").map((word) => {
+    return word[0].toUpperCase() + word.substring(1).toLowerCase();
+  });
+  return strArr.join(" ");
+}
+
+document
+  .getElementById("dataForm")
+  .addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    let name = document.getElementById("nama_lengkap").value;
+    let jk = document.getElementById("jenis_kelamin").value;
+    let bin = document.getElementById("bin_binti").value;
+    let agama = document.getElementById("agama").value;
+    let temLahir = document.getElementById("tempat_lahir").value;
+    let tangLahir = document.getElementById("tanggal_lahir").value;
+    let wargaNegara = document.getElementById("warganegara").value;
+    let nik = document.getElementById("no_ktp_nik").value;
+    let pekerjaan = document.getElementById("pekerjaan").value;
+    let alamat = document.getElementById("alamat").value;
+
+    name = toTitleCase(name);
+    bin = toTitleCase(bin);
+    agama = toTitleCase(agama);
+    temLahir = toTitleCase(temLahir);
+    tangLahir = formatTanggal(tangLahir);
+    const lahir = `${temLahir}, ${tangLahir}`;
+    wargaNegara = toTitleCase(wargaNegara);
+    pekerjaan = toTitleCase(pekerjaan);
+    alamat = toTitleCase(alamat);
+
+    // Isi PDF
+    await fillPDF(
+      name,
+      jk,
+      bin,
+      lahir,
+      agama,
+      wargaNegara,
+      nik,
+      pekerjaan,
+      alamat
+    );
+  });
+
+const fillPDF = async (
+  name,
+  jk,
+  bin,
+  lahir,
+  agama,
+  wargaNegara,
+  nik,
+  pekerjaan,
+  alamat
+) => {
   const { PDFDocument, rgb } = PDFLib;
 
   // Ambil template
-  const url = 'document/tes.pdf';
-  const existingPdfBytes = await fetch(url).then(res => res.arrayBuffer());
+  const url = "document/SuratKeteranganDomisili.pdf";
+  const existingPdfBytes = await fetch(url).then((res) => res.arrayBuffer());
 
   const pdfDoc = await PDFDocument.load(existingPdfBytes);
   const pages = pdfDoc.getPages();
   const firstPage = pages[0];
-  let tinggiAwal = 211
+  let tinggiAwal = 278;
+  let x = 225;
 
-  const { width, height } = firstPage.getSize();
-  firstPage.drawText(name, {
-    x: 220,
-    y: height - tinggiAwal,
-    size: 11,
-    color: rgb(0, 0, 0)
-  }, tinggiAwal += 15);
+  const format = () => {
+    const { width, height } = firstPage.getSize();
 
-  firstPage.drawText(jk, {
-    x: 220,
-    y: height - tinggiAwal,
-    size: 11,
-    color: rgb(0, 0, 0)
-  }, tinggiAwal += 15);
+    return {
+      x: x,
+      y: height - tinggiAwal,
+      size: 11,
+      color: rgb(0, 0, 0),
+    };
+  };
 
-  firstPage.drawText(bin, {
-    x: 220,
-    y: height - tinggiAwal,
-    size: 11,
-    color: rgb(0, 0, 0)
-  }, tinggiAwal += 15);
+  firstPage.drawText(name, format(), (tinggiAwal += 22));
+  firstPage.drawText(jk, format(), (tinggiAwal += 22));
+  firstPage.drawText(bin, format(), (tinggiAwal += 22));
+  firstPage.drawText(lahir, format(), (tinggiAwal += 22));
+  firstPage.drawText(agama, format(), (tinggiAwal += 22));
+  firstPage.drawText(wargaNegara, format(), (tinggiAwal += 22));
+  firstPage.drawText(nik, format(), (tinggiAwal += 22));
+  firstPage.drawText(pekerjaan, format(), (tinggiAwal += 22));
+  firstPage.drawText(alamat, format(), (tinggiAwal += 22));
 
-  firstPage.drawText(lahir, {
-    x: 220,
-    y: height - tinggiAwal,
-    size: 11,
-    color: rgb(0, 0, 0)
-  }, tinggiAwal += 15);
-  
-  firstPage.drawText(agama, {
-    x: 220,
-    y: height - tinggiAwal,
-    size: 11,
-    color: rgb(0, 0, 0)
-  }, tinggiAwal += 15);
   const pdfBytes = await pdfDoc.save();
 
   // Bikin link download
-  const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-  const link = document.createElement('a');
+  const blob = new Blob([pdfBytes], { type: "application/pdf" });
+  const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
   link.download = `result/tes_form_${name}.pdf`;
   link.click();
-}
+};
