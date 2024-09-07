@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Surat Keterangan Domisili</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="flex items-center justify-center min-h-screen bg-gray-900 text-white">
+
+<div class="w-full max-w-md p-6 rounded-lg shadow-md">
+  <h1 class="text-2xl font-bold text-center mb-6">Form Pengisian Domisili</h1>
+  
+  <form id="dataForm">
+    <div class="relative z-0 w-full mb-5 group">
+        <input type="text" name="nama_lengkap" id="nama_lengkap" class="block py-2.5 px-3 w-full text-black text-sm bg-white rounded-full border-0 border-b-2 border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-500 peer" placeholder=" " required />
+        <label for="nama_lengkap" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-1.5 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nama Lengkap</label>
+    </div>
+    <div class="relative z-0 w-full mb-5 group">
+        <select name="jenis_kelamin" id="jenis_kelamin" class="block py-2.5 px-2 w-full text-sm text-black bg-white rounded-full border-0 border-b-2 border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-500 peer" required>
+            <option value="" disabled selected></option>
+            <option value="Laki-laki">Laki-laki</option>
+            <option value="Perempuan">Perempuan</option>
+        </select>
+        <label for="jenis_kelamin" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-1.5 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Jenis Kelamin</label>
+    </div>
+    <div class="relative z-0 w-full mb-5 group">
+        <input type="text" name="bin_binti" id="bin_binti" class="block py-2.5 px-3 w-full text-black text-sm bg-white rounded-full border-0 border-b-2 border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-500 peer" placeholder=" " required />
+        <label for="bin_binti" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-1.5 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nama Ayah</label>
+    </div>
+    <div class="grid grid-cols-2 gap-3">
+      <div class="relative z-0 w-full mb-5 group">
+        <input type="text" name="tempat_lahir" id="tempat_lahir" class="block py-2.5 px-3 w-full text-sm text-black bg-white rounded-full border-0 border-b-2 border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-500 peer" placeholder=" " required />
+        <label for="tempat_lahir" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-1.5 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Tempat Lahir</label>
+      </div>
+      <div class="relative z-0 w-full mb-5 group">
+          <input type="date" name="tanggal_lahir" id="tanggal_lahir" class="block py-2.5 px-3 w-full text-sm text-black bg-white rounded-full border-0 border-b-2 border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-500 peer" placeholder=" " required />
+          <label for="tanggal_lahir" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-1.5 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Tanggal Lahir</label>
+      </div>
+    </div>
+    <div class="relative z-0 w-full mb-5 group">
+      <select name="agama" id="agama" class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-500 peer" required>
+        <option value="" disabled selected></option>
+        <option value="islam">Islam</option>
+        <option value="katolik">Katolik</option>
+        <option value="kristen">Protestan</option>
+        <option value="hindu">Hindu</option>
+        <option value="budha">Budha</option>
+        <option value="budha">Khonghucu</option>
+      </select>  
+      <label for="agama" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Agama</label>
+    </div>
+    <div class="relative z-0 w-full mb-5 group">
+        <input type="text" name="warganegara" id="warganegara" class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-500 peer" placeholder=" " required />
+        <label for="warganegara" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Warganegara</label>
+    </div>
+    <div class="relative z-0 w-full mb-5 group">
+        <input type="number" name="no_ktp_nik" id="no_ktp_nik" class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-500 peer" placeholder=" " required />
+        <label for="no_ktp_nik" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">No KTP/NIK</label>
+    </div>
+    <div class="relative z-0 w-full mb-5 group">
+        <input type="text" name="pekerjaan" id="pekerjaan" class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-500 peer" placeholder=" " required />
+        <label for="pekerjaan" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Pekerjaan</label>
+    </div>
+    <div class="relative z-0 w-full mb-5 group">
+        <input type="text" name="alamat" id="alamat" class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-500 peer" placeholder=" " required />
+        <label for="alamat" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Alamat</label>
+    </div>
+    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+  </form>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.16.0/pdf-lib.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
