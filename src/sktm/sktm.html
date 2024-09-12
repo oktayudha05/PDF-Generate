@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Surat Keterangan Tidak Mampu</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+
+    body {
+      background-image: url('../../im1.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .bg-overlay {
+      background-color: rgba(0, 0, 0, 0.6); 
+    }
+  </style>
+</head>
+<body class="bg-gray-900 bg-opacity-50 flex items-center justify-center min-h-screen relative">
+  <!-- Dark Overlay -->
+  <div class="absolute inset-0 bg-overlay"></div>
+  
+  <!-- Form Container -->
+  <div class="relative bg-white bg-opacity-80 shadow-lg rounded-lg px-4 my-4 py-4 max-w-lg w-full lg:mx-8">
+    <h1 class="text-2xl font-semibold text-center mb-6 text-gray-800 pt-2">Surat Keterangan Tidak Mampu</h1>
+    <form id="dataForm">
+      <!-- Nama Lengkap -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
+        <input type="text" id="nama_lengkap" class="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Nama Lengkap"   >
+      </div>
+      <!-- Jenis Kelamin -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700">Jenis Kelamin</label>
+        <select id="jenis_kelamin" class="mt-1 text-gray-500 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+          <option value="" disabled selected>Jenis Kelamin</option>
+          <option value="Laki-laki">Laki-laki</option>
+          <option value="Perempuan">Perempuan</option>
+        </select>
+      </div>
+      <!-- Tempat Lahir -->
+      <div class="grid gap-6 grid-cols-2">
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700">Tempat Lahir</label>
+        <input id="tempat_lahir" type="text" class="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Tempat Lahir"   >
+      </div>
+      <!-- Tanggal Lahir -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700">Tanggal Lahir</label>
+        <input id="tanggal_lahir" type="date" class="mt-1 text-gray-500 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+      </div>
+      </div>
+      <!-- Agama -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700">Agama</label>
+        <select name="agama" id="agama" class="mt-1 text-gray-500 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"   >
+          <option value="" disabled selected>Agama</option>
+          <option value="islam">Islam</option>
+          <option value="katolik">Katolik</option>
+          <option value="kristen">Protestan</option>
+          <option value="hindu">Hindu</option>
+          <option value="budha">Budha</option>
+          <option value="budha">Khonghucu</option>
+        </select>
+      </div>
+      <!-- Kewarganegaraan -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700">Kewarganegaraan</label>
+        <input id="warganegara" type="text" class="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Kewarganegaraan"   >
+      </div>
+      <!-- Nomor Induk Kependudukan -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700">Nomor Induk Kependudukan</label>
+        <input id="no_ktp_nik" type="number" class="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Nomor Induk Kependudukan"   >
+      </div>
+      <!-- Pekerjaan -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700">Pekerjaan</label>
+        <input id="pekerjaan" type="text" class="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Pekerjaan"   >
+      </div>
+      <!-- Alamat -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700">Alamat</label>
+        <input id="alamat" type="text" class="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Alamat(Tanpa RT/RW)"   >
+      </div>
+      <!-- RT/RW -->
+      <div class="grid gap-6 mb-6 grid-cols-2">
+        <div>
+          <label for="rt" class="block mb-2 text-sm font-medium text-gray-900">RT</label>
+          <input type="number" id="rt" class="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="RT"    />
+      </div>
+      <div>
+          <label for="rw" class="block mb-2 text-sm font-medium text-gray-900">RW</label>
+          <input type="number" id="rw" class=" mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="RW"    />
+      </div>
+      </div>
+      <!-- Submit Button -->
+      <div>
+        <button type="submit" class="w-full bg-green-600 text-white py-2 px-4 rounded-md shadow hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Submit</button>
+      </div>
+    </form>
+  </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.16.0/pdf-lib.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
