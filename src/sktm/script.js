@@ -102,8 +102,32 @@ const fillPDF = async (
   form.getTextField("alamat").setText(alamat);
   form.getTextField("rt").setText(rt);
   form.getTextField("tanggal").setText(tanggal);
+  form.getTextField("tanggal_bwh").setText(tanggal);
 
   const pdfBytes = await pdfDoc.save();
+
+  const formData = new FormData();
+  formData.append(
+    "file",
+    new Blob([pdfBytes], { type: "application/pdf" }),
+    `Surat Keterangan Domisili_${name}.pdf`
+  );
+  formData.append("name", name);
+
+  // Kirim ke backend menggunakan POST
+  fetch("http://localhost:5000/upload", {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.text())
+    .then((data) => {
+      console.log(data);
+      alert("PDF berhasil disimpan di database");
+    })
+    .catch((error) => {
+      console.error(error);
+      alert("Gagal menyimpan PDF");
+    });
 
   // Bikin link download
   const blob = new Blob([pdfBytes], { type: "application/pdf" });
