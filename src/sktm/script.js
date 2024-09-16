@@ -90,11 +90,12 @@ const fillPDF = async (
   const { PDFDocument, rgb } = PDFLib;
 
   // Ambil template
-  const url = "document/sktm.pdf";
+  const url = "document/sktmlib.pdf";
   const existingPdfBytes = await fetch(url).then((res) => res.arrayBuffer());
 
   const pdfDoc = await PDFDocument.load(existingPdfBytes);
   const pages = pdfDoc.getPages();
+  const form = pdfDoc.getForm();
   const firstPage = pages[0];
   let tinggiAwal = 347;
   let panjangAwal = 0;
@@ -111,7 +112,8 @@ const fillPDF = async (
     };
   };
 
-  firstPage.drawText(name, format(), (tinggiAwal += 15));
+  form.getTextField("nama").setText(name);
+  //firstPage.drawText(name, format(), (tinggiAwal += 15));
   firstPage.drawText(jk, format(), (tinggiAwal += 16));
   //firstPage.drawText(bin, format(), (tinggiAwal += 22));
   firstPage.drawText(lahir, format(), (tinggiAwal += 16));
