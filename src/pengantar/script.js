@@ -1,3 +1,4 @@
+const urlBackend = "https://6ft71xh4-5000.asse.devtunnels.ms";
 function formatTanggal(tanggal) {
   const bulanNama = [
     "Januari",
@@ -37,91 +38,108 @@ document
   .addEventListener("submit", async (event) => {
     event.preventDefault();
 
+    let no_document = document.getElementById("no_document").value;
     let name = document.getElementById("nama_lengkap").value;
     let jk = document.getElementById("jenis_kelamin").value;
-    let bin = document.getElementById("bin_binti").value;
-    let agama = document.getElementById("agama").value;
     let temLahir = document.getElementById("tempat_lahir").value;
     let tangLahir = document.getElementById("tanggal_lahir").value;
     let wargaNegara = document.getElementById("warganegara").value;
     let nik = document.getElementById("no_ktp_nik").value;
     let pekerjaan = document.getElementById("pekerjaan").value;
     let alamat = document.getElementById("alamat").value;
+    let rt = document.getElementById("rt").value;
+    if (rt.length === 1) {
+      rt = `0${rt}`;
+    }
 
     name = toTitleCase(name);
-    bin = toTitleCase(bin);
-    agama = toTitleCase(agama);
     temLahir = toTitleCase(temLahir);
     tangLahir = formatTanggal(tangLahir);
     const lahir = `${temLahir}, ${tangLahir}`;
     wargaNegara = toTitleCase(wargaNegara);
     pekerjaan = toTitleCase(pekerjaan);
     alamat = toTitleCase(alamat);
+    const tanggal = `${formatTanggal(new Date())}`;
 
     // Isi PDF
     await fillPDF(
+      no_document,
       name,
       jk,
-      bin,
       lahir,
-      agama,
       wargaNegara,
       nik,
       pekerjaan,
-      alamat
+      alamat,
+      rt,
+      tanggal
     );
   });
 
 const fillPDF = async (
+  no_document,
   name,
   jk,
-  bin,
   lahir,
-  agama,
   wargaNegara,
   nik,
   pekerjaan,
-  alamat
+  alamat,
+  rt,
+  tanggal
 ) => {
   const { PDFDocument, rgb } = PDFLib;
 
   // Ambil template
-  const url = "document/SuratKeteranganDomisili.pdf";
+  const url = "document/SuratPengantar-fil.pdf";
   const existingPdfBytes = await fetch(url).then((res) => res.arrayBuffer());
 
   const pdfDoc = await PDFDocument.load(existingPdfBytes);
-  const pages = pdfDoc.getPages();
-  const firstPage = pages[0];
-  let tinggiAwal = 278;
-  let x = 225;
+  const form = pdfDoc.getForm();
 
-  const format = () => {
-    const { width, height } = firstPage.getSize();
-
-    return {
-      x: x,
-      y: height - tinggiAwal,
-      size: 11,
-      color: rgb(0, 0, 0),
-    };
-  };
-
-  firstPage.drawText(name, format(), (tinggiAwal += 22));
-  firstPage.drawText(jk, format(), (tinggiAwal += 22));
-  firstPage.drawText(bin, format(), (tinggiAwal += 22));
-  firstPage.drawText(lahir, format(), (tinggiAwal += 22));
-  firstPage.drawText(agama, format(), (tinggiAwal += 22));
-  firstPage.drawText(wargaNegara, format(), (tinggiAwal += 22));
-  firstPage.drawText(nik, format(), (tinggiAwal += 22));
-  firstPage.drawText(pekerjaan, format(), (tinggiAwal += 22));
-  firstPage.drawText(alamat, format(), (tinggiAwal += 22));
+  form.getTextField("nomor").setText(no_document);
+  form.getTextField("nama").setText(name);
+  form.getTextField("jk").setText(jk);
+  form.getTextField("ttl").setText(lahir);
+  form.getTextField("warganegara").setText(wargaNegara);
+  form.getTextField("nik").setText(nik);
+  form.getTextField("pekerjaan").setText(pekerjaan);
+  form.getTextField("alamat").setText(alamat);
+  form.getTextField("rt").setText(rt);
+  form.getTextField("tanggal").setText(tanggal);
+  form.getTextField("tanggal_bwh").setText(tanggal);
 
   const pdfBytes = await pdfDoc.save();
+
+  const formData = new FormData();
+  formData.append(
+    "file",
+    new Blob([pdfBytes], { type: "application/pdf" }),
+    `Surat Pengantar_${name}.pdf`
+  );
+  formData.append("name", name);
+  formData.append("no_document", no_document);
+  formData.append("jenis_document", "Surat Pengantar");
+
+  // Kirim ke backend menggunakan POST
+  fetch(`${urlBackend}/upload`, {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.text())
+    .then((data) => {
+      console.log(data);
+      alert("PDF berhasil disimpan di database");
+    })
+    .catch((error) => {
+      console.error(error);
+      alert("Gagal menyimpan PDF");
+    });
 
   // Bikin link download
   const blob = new Blob([pdfBytes], { type: "application/pdf" });
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.download = `Surat Keterangan Domisili_${name}.pdf`;
+  link.download = `Surat Pengantar_${name}.pdf`;
   link.click();
 };

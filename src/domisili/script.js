@@ -1,3 +1,4 @@
+const urlBackend = "https://6ft71xh4-5000.asse.devtunnels.ms";
 function formatTanggal(tanggal) {
   const bulanNama = [
     "Januari",
@@ -37,6 +38,7 @@ document
   .addEventListener("submit", async (event) => {
     event.preventDefault();
 
+    let no_document = document.getElementById("no_document").value;
     let name = document.getElementById("nama_lengkap").value;
     let jk = document.getElementById("jenis_kelamin").value;
     let bin = document.getElementById("bin_binti").value;
@@ -65,6 +67,7 @@ document
 
     // Isi PDF
     await fillPDF(
+      no_document,
       name,
       jk,
       bin,
@@ -80,6 +83,7 @@ document
   });
 
 const fillPDF = async (
+  no_document,
   name,
   jk,
   bin,
@@ -151,6 +155,31 @@ const fillPDF = async (
   });
 
   const pdfBytes = await pdfDoc.save();
+
+  const formData = new FormData();
+  formData.append(
+    "file",
+    new Blob([pdfBytes], { type: "application/pdf" }),
+    `Surat Keterangan Domisili_${name}.pdf`
+  );
+  formData.append("name", name);
+  formData.append("no_document", no_document);
+  formData.append("jenis_document", "Surat Keterangan Domisili");
+
+  // Kirim ke backend menggunakan POST
+  fetch(`${urlBackend}/upload`, {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.text())
+    .then((data) => {
+      console.log(data);
+      alert("PDF berhasil disimpan di database");
+    })
+    .catch((error) => {
+      console.error(error);
+      alert("Gagal menyimpan PDF");
+    });
 
   // Bikin link download
   const blob = new Blob([pdfBytes], { type: "application/pdf" });

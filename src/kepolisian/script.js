@@ -86,7 +86,7 @@ const fillPDF = async (
   const { PDFDocument, rgb } = PDFLib;
 
   // Ambil template
-  const url = "document/SuratKeteranganDomisili.pdf";
+  const url = "document/polisi-fil.pdf";
   const existingPdfBytes = await fetch(url).then((res) => res.arrayBuffer());
 
   const pdfDoc = await PDFDocument.load(existingPdfBytes);
@@ -122,6 +122,6 @@ const fillPDF = async (
   const blob = new Blob([pdfBytes], { type: "application/pdf" });
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.download = `Surat Keterangan Domisili_${name}.pdf`;
+  link.download = `Surat Catatan Kepolisian_${name}.pdf`;
   link.click();
 };

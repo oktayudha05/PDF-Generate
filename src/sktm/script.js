@@ -1,3 +1,4 @@
+const urlBackend = "https://6ft71xh4-5000.asse.devtunnels.ms";
 function formatTanggal(tanggal) {
   const bulanNama = [
     "Januari",
@@ -37,6 +38,7 @@ document
   .addEventListener("submit", async (event) => {
     event.preventDefault();
 
+    let no_document = document.getElementById("no_document").value;
     let name = document.getElementById("nama_lengkap").value;
     let jk = document.getElementById("jenis_kelamin").value;
     let temLahir = document.getElementById("tempat_lahir").value;
@@ -61,6 +63,7 @@ document
 
     // Isi PDF
     await fillPDF(
+      no_document,
       name,
       jk,
       lahir,
@@ -74,6 +77,7 @@ document
   });
 
 const fillPDF = async (
+  no_document,
   name,
   jk,
   lahir,
@@ -110,12 +114,15 @@ const fillPDF = async (
   formData.append(
     "file",
     new Blob([pdfBytes], { type: "application/pdf" }),
-    `Surat Keterangan Domisili_${name}.pdf`
+    `Surat Keterangan Tidak Mampu_${name}.pdf`
   );
   formData.append("name", name);
+  formData.append("no_document", no_document);
+  formData.append("jenis_document", "Surat Keterangan Tidak Mampu");
 
   // Kirim ke backend menggunakan POST
-  fetch("http://localhost:5000/upload", {
+
+  fetch(`${urlBackend}/upload`, {
     method: "POST",
     body: formData,
   })
@@ -133,6 +140,6 @@ const fillPDF = async (
   const blob = new Blob([pdfBytes], { type: "application/pdf" });
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.download = `Surat Keterangan Domisili_${name}.pdf`;
+  link.download = `Surat Keterangan Tidak Mampu_${name}.pdf`;
   link.click();
 };

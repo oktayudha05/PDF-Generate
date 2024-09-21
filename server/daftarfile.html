@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React PDF List</title>
+  <!-- React & ReactDOM from CDN -->
+  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <!-- Babel to support JSX -->
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    // React Component to consume JSON from the backend
+    const App = () => {
+      const [pdfs, setPdfs] = React.useState([]);
+      const [loading, setLoading] = React.useState(true);
+
+      React.useEffect(() => {
+        // Fetch the PDF list from the backend
+        fetch("http://localhost:5000/list")
+          .then(response => response.json())
+          .then(data => {
+            setPdfs(data); // Set the fetched PDF data to state
+            setLoading(false);
+          })
+          .catch(error => {
+            console.error("Error fetching data:", error);
+            setLoading(false);
+          });
+      }, []);
+
+      if (loading) {
+        return <div>Loading...</div>;
+      }
+
+      return (
+        <div>
+          <h1>Daftar PDF</h1>
+          <ul>
+            {pdfs.map((pdf) => (
+              <li key={pdf._id}>
+                {pdf.name} - <a href={`data:application/pdf;base64,${btoa(new Uint8Array(pdf.pdfData).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`} download={`${pdf.name}.pdf`}>Download</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    };
+
+    // Render the React app into the DOM
+    ReactDOM.render(<App />, document.getElementById("root"));
+  </script>
+</body>
+</html>

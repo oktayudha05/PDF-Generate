@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Surat Keterangan Domisili</title>
+  <title>Surat Pengantar Catatan Kepolisian</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
 
     body {
-      background-image: url('../../im1.jpg');
+      background-image: url('img_16510258721.jpg');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -26,12 +26,8 @@
   <!-- Form Container -->
   <div class="relative bg-white bg-opacity-80 shadow-lg rounded-lg px-4 my-4 py-4 max-w-lg w-full lg:mx-8">
     <a href="/">Home</a>
-    <h1 class="text-2xl font-semibold text-center mb-6 text-gray-800 pt-2">Surat Keterangan Domisili</h1>
+    <h1 class="text-2xl font-semibold text-center mb-6 text-gray-800 pt-2">Surat Pengantar Catatan Kepolisian</h1>
     <form id="dataForm">
-      <div class="mb-4">
-        <label class="block text-sm font-medium text-gray-700">Nomor Dokumen</label>
-        <input type="number" id="no_document" class="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Nomor Dokumen"   >
-      </div>
       <!-- Nama Lengkap -->
       <div class="mb-4">
         <label class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
@@ -46,11 +42,6 @@
           <option value="Perempuan">Perempuan</option>
         </select>
       </div>
-      <!-- Nama Ayah -->
-      <div class="mb-4">
-        <label class="block text-sm font-medium text-gray-700">Nama Ayah</label>
-        <input id="bin_binti" type="text" class="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Nama Ayah"   >
-      </div>
       <!-- Tempat Lahir -->
       <div class="grid gap-6 grid-cols-2">
       <div class="mb-4">
@@ -62,6 +53,11 @@
         <label class="block text-sm font-medium text-gray-700">Tanggal Lahir</label>
         <input id="tanggal_lahir" type="date" class="mt-1 text-gray-500 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
       </div>
+      </div>
+      <!-- Kewarganegaraan -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700">Kewarganegaraan</label>
+        <input id="warganegara" type="text" class="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Kewarganegaraan"   >
       </div>
       <!-- Agama -->
       <div class="mb-4">
@@ -76,11 +72,15 @@
           <option value="budha">Khonghucu</option>
         </select>
       </div>
-      <!-- Kewarganegaraan -->
+      <!--Status Perkawinan -->
       <div class="mb-4">
-        <label class="block text-sm font-medium text-gray-700">Kewarganegaraan</label>
-        <input id="warganegara" type="text" class="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Kewarganegaraan"   >
-      </div>
+        <label class="block text-sm font-medium text-gray-700">Status Perkawinan</label>
+        <select id="kawin" class="mt-1 text-gray-500 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+          <option value="" disabled selected>Status Perkawinan</option>
+          <option value="Kawin">Kawin</option>
+          <option value="Belum Kawin">Belum Kawin</option>
+        </select>
+       </div>
       <!-- Nomor Induk Kependudukan -->
       <div class="mb-4">
         <label class="block text-sm font-medium text-gray-700">Nomor Induk Kependudukan</label>
