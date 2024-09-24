@@ -1,3 +1,4 @@
+import path from "path";
 import express from "express";
 import mongoose from "mongoose";
 import multer from "multer";
@@ -42,6 +43,25 @@ const Pdf = mongoose.model("Pdf", pdfSchema);
 // Middleware untuk parsing form-data dengan file upload
 const upload = multer();
 
+// verifikasi JWT
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+
+  if (token == null) {
+    return res.status(401).send("Akses ditolak, token tidak disediakan");
+  }
+
+  jwt.verify(token, SECRET_KEY, (err, user) => {
+    if (err) {
+      return res.status(403).send("Token tidak valid");
+    }
+
+    req.user = user;
+    next();
+  });
+};
+
 // Route untuk handle upload PDF
 app.post("/upload", upload.single("file"), async (req, res) => {
   try {
@@ -60,6 +80,49 @@ app.post("/upload", upload.single("file"), async (req, res) => {
   }
 });
 
+app.get("/document", authenticateToken, async (req, res) => {
+  try {
+    // Ambil daftar PDF dari MongoDB
+    const pdfs = await Pdf.find({}, "name jenis_document no_document _id");
+
+    // Buat HTML yang akan menampilkan daftar PDF
+    let htmlContent = `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Daftar PDF</title>
+      </head>
+      <body>
+        <h1>Daftar PDF</h1>
+        <ul>
+    `;
+
+    // Looping untuk menambahkan item PDF ke dalam HTML
+    pdfs.forEach((pdf) => {
+      htmlContent += `
+        <li>
+          ${pdf.jenis_document} - ${pdf.name}
+          <a href="/download/${pdf._id}">Download PDF</a>
+        </li>
+      `;
+    });
+
+    // Tutup tag HTML
+    htmlContent += `
+        </ul>
+      </body>
+      </html>
+    `;
+
+    // Kirimkan HTML sebagai respons
+    res.send(htmlContent);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Gagal memuat daftar PDF");
+  }
+});
 // Route untuk handle register user
 app.post("/register", async (req, res) => {
   try {
@@ -98,25 +161,6 @@ app.post("/login", async (req, res) => {
     res.status(500).send(`login gagal ${error.message}`);
   }
 });
-
-// verifikasi JWT
-const authenticateToken = (req, res, next) => {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-
-  if (token == null) {
-    return res.status(401).send("Akses ditolak, token tidak disediakan");
-  }
-
-  jwt.verify(token, SECRET_KEY, (err, user) => {
-    if (err) {
-      return res.status(403).send("Token tidak valid");
-    }
-
-    req.user = user;
-    next();
-  });
-};
 
 // Route untuk melihat daftar PDF (dilindungi dengan autentikasi)
 app.get("/list", authenticateToken, async (req, res) => {
