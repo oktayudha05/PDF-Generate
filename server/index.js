@@ -3,31 +3,38 @@ import express from "express";
 import mongoose from "mongoose";
 import multer from "multer";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import fs from "fs";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = 5000;
-const SECRET_KEY = "secretKeyForJWT"; // Ganti dengan secret key yang kuat di lingkungan produksi
+const SECRET_KEY = "secretKeyForJWT";
 
 app.use(cors());
-app.use(express.json()); // Untuk parsing JSON
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+app.use(express.static(path.join(__dirname, "public")));
 
-// Setup MongoDB connection
 mongoose.connect("mongodb://localhost:27017/kelurahanDB", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
 const adminSchema = new mongoose.Schema({
+  nama: String,
+  jabatan: String,
   username: String,
-  password: String, // Password yang akan di-hash
+  password: String,
 });
-
-const Admin = mongoose.model("Admin", adminSchema);
-
-// Setup skema untuk PDF
 const pdfSchema = new mongoose.Schema(
   {
     name: String,
@@ -37,24 +44,23 @@ const pdfSchema = new mongoose.Schema(
   },
   { collection: "kelurahan" }
 );
-
+const Admin = mongoose.model("Admin", adminSchema);
 const Pdf = mongoose.model("Pdf", pdfSchema);
 
-// Middleware untuk parsing form-data dengan file upload
 const upload = multer();
 
-// verifikasi JWT
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
+  const token =
+    (authHeader && authHeader.split(" ")[1]) || req.cookies.authToken;
 
   if (token == null) {
-    return res.status(401).send("Akses ditolak, token tidak disediakan");
+    return res.redirect("/login");
   }
 
   jwt.verify(token, SECRET_KEY, (err, user) => {
     if (err) {
-      return res.status(403).send("Token tidak valid");
+      return res.render("invalidToken");
     }
 
     req.user = user;
@@ -62,7 +68,6 @@ const authenticateToken = (req, res, next) => {
   });
 };
 
-// Route untuk handle upload PDF
 app.post("/upload", upload.single("file"), async (req, res) => {
   try {
     const pdfFile = req.file;
@@ -80,64 +85,37 @@ app.post("/upload", upload.single("file"), async (req, res) => {
   }
 });
 
-app.get("/document", authenticateToken, async (req, res) => {
-  try {
-    // Ambil daftar PDF dari MongoDB
-    const pdfs = await Pdf.find({}, "name jenis_document no_document _id");
-
-    // Buat HTML yang akan menampilkan daftar PDF
-    let htmlContent = `
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Daftar PDF</title>
-      </head>
-      <body>
-        <h1>Daftar PDF</h1>
-        <ul>
-    `;
-
-    // Looping untuk menambahkan item PDF ke dalam HTML
-    pdfs.forEach((pdf) => {
-      htmlContent += `
-        <li>
-          ${pdf.jenis_document} - ${pdf.name}
-          <a href="/download/${pdf._id}">Download PDF</a>
-        </li>
-      `;
-    });
-
-    // Tutup tag HTML
-    htmlContent += `
-        </ul>
-      </body>
-      </html>
-    `;
-
-    // Kirimkan HTML sebagai respons
-    res.send(htmlContent);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Gagal memuat daftar PDF");
-  }
+app.get("/register", (req, res) => {
+  res.render("register");
 });
-// Route untuk handle register user
+
 app.post("/register", async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10); // Hash password sebelum disimpan
-    const newAdmin = new Admin({ username, password: hashedPassword });
+    const { username, password, nama, jabatan } = req.body;
+    const admin = await Admin.findOne({ username });
+    if (admin) {
+      return res.send("Username sudah ada");
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newAdmin = new Admin({
+      nama,
+      jabatan,
+      username,
+      password: hashedPassword,
+    });
     await newAdmin.save();
-    res.send("Admin berhasil didaftarkan!");
+    res.redirect("/login");
   } catch (error) {
     console.error(error);
     res.status(500).send("Gagal mendaftarkan admin");
   }
 });
 
-// Route untuk handle login
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
 app.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -155,25 +133,24 @@ app.post("/login", async (req, res) => {
       expiresIn: "1h",
     });
 
-    res.json({ token });
+    res.cookie("authToken", token, { httpOnly: true });
+    return res.redirect("/document");
   } catch (error) {
     console.error(error);
     res.status(500).send(`login gagal ${error.message}`);
   }
 });
 
-// Route untuk melihat daftar PDF (dilindungi dengan autentikasi)
-app.get("/list", authenticateToken, async (req, res) => {
+app.get("/document", authenticateToken, async (req, res) => {
   try {
     const pdfs = await Pdf.find({}, "name jenis_document no_document _id");
-    res.json(pdfs);
+    res.render("document", { pdfs });
   } catch (error) {
     console.error(error);
     res.status(500).send("Gagal memuat daftar PDF");
   }
 });
 
-// Route untuk mendownload PDF berdasarkan ID (juga dilindungi dengan autentikasi)
 app.get("/download/:id", authenticateToken, async (req, res) => {
   try {
     const pdf = await Pdf.findById(req.params.id);

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daftar PDF</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="h-screen bg-cover bg-center bg-no-repeat" style="background-image: url('/images/im1.jpg');">
+  <div class="h-full bg-black bg-opacity-50 flex flex-col justify-center items-center">
+    <h1 class="absolute top-8 left-0 right-0 text-2xl md:text-4xl font-bold text-white mb-4 text-center shadow-md">
+      Sistem Automatisasi Dokumen Desa Madusari
+    </h1>
+    
+    <div class="relative bg-white bg-opacity-80 shadow-lg rounded-lg px-0 my-4 py-4 max-w-xl w-full lg:mx-4">
+      <a href="https://6ft71xh4-5500.asse.devtunnels.ms" class="ml-2">Home</a>
+      <h1 class="text-2xl font-semibold text-center mb-6 text-gray-800 pt-2">Daftar Dokumen</h1>
+        <div class="overflow-y-auto max-h-96">
+          <table class="min-w-full table-auto">
+            <thead class="bg-gray-200">
+              <tr>
+                <th class="px-4 py-2 text-left text-gray-600">Jenis Dokumen</th>
+                <th class="px-4 py-2 text-left text-gray-600">Nama Pemilik</th>
+                <th class="px-4 py-2 text-left text-gray-600">Unduh</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% pdfs.forEach(pdf => { %>
+                <tr class="border-b border-gray-300">
+                  <td class="px-4 py-2"><%= pdf.jenis_document %></td>
+                  <td class="px-4 py-2"><%= pdf.name %></td>
+                  <td class="px-4 py-2">
+                    <a href="/download/<%= pdf._id %>" class="w-full bg-blue-600 text-white py-1 px-2 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Download</a>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
